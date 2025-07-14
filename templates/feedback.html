@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Laisser un avis – SwissRate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../static/assets/style.css">
+  <style>
+    body {font-family: 'Segoe UI', Arial, sans-serif; background: #f7f8fa;}
+    .navbar {display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom:1.5px solid #ececec; padding: 0.4rem 1.4rem 0.4rem 1.1rem; margin-bottom: 2.1rem; position: sticky; top: 0; z-index: 100;}
+    .navbar-left, .navbar-center, .navbar-right {display: flex; align-items: center;}
+    .navbar-center {
+      position: relative;
+      flex:1;
+      justify-content: center;
+    }
+    .nav-logo {display: flex; align-items: center; text-decoration: none;}
+    .nav-link {margin: 0 0.75em; color: #222; text-decoration: none; font-weight: 500; transition: color 0.14s;}
+    .nav-link:hover {color: #e63946;}
+    .nav-btn {margin-left: 1em; background: #e63946; color: #fff; text-decoration: none; border-radius: 6px; padding: 0.5em 1.2em; font-weight: 600; font-size: 1em;}
+    .container {max-width: 640px; margin: 2.5rem auto 0; background: #fff; border-radius: 18px; box-shadow: 0 2px 14px 0 rgba(0,0,0,0.04); padding: 2.4rem 2rem 2.7rem 2rem;}
+    .profile-select {display: flex; justify-content: center; gap: 2rem; margin: 3rem 0;}
+    .profile-btn {
+      flex: 1 1 0; min-width: 140px; padding: 1.3em 0.4em; border: none; border-radius: 17px;
+      background: #f2f2f7; font-size: 1.22em; font-weight: 600; color: #2a2933; cursor: pointer; transition: box-shadow .12s, background .16s;
+      box-shadow: 0 2px 10px 0 rgba(0,0,0,0.02);
+    }
+    .profile-btn.selected, .profile-btn:hover {background: #e63946; color: #fff;}
+    .question-label {font-size: 1.25rem; font-weight: 600; margin-bottom: 1.4em;}
+    #starBar {display: flex; gap: 0.22em; margin-bottom: 1.2em;}
+    .star-svg {
+      width: 34px; height: 34px; vertical-align: middle; cursor: pointer;
+      filter: drop-shadow(0px 1px 1.1px #ebe9ee);
+      transition: transform 0.07s;
+    }
+    .star-svg:hover { transform: scale(1.11);}
+    .comment-box {width: 100%; min-height: 62px; border-radius: 8px; border: 1px solid #e3e3e6; padding: 0.85em; font-size: 1.03em; margin-bottom: 1.3em;}
+    .question-actions {display: flex; gap: 1em; margin-top: 1.2em;}
+    .question-actions button {
+      padding: 0.7em 1.4em; border: none; border-radius: 8px; font-weight: 600; font-size: 1em; background: #e63946; color: #fff; cursor: pointer; opacity: 0.92; transition: opacity .15s;}
+    .question-actions button:disabled { opacity: 0.45; cursor: default;}
+    .question-actions .skip {background: #ececf5; color: #444;}
+    .resume-section {margin-top: 2.3rem;}
+    .resume-table {width: 100%; border-collapse: collapse; background: #f8fafc; border-radius: 10px;}
+    .resume-table th, .resume-table td {padding: 0.8em; border-bottom: 1px solid #ececec; text-align: left;}
+    .resume-table th {background: #fafbfc;}
+    .resume-table tr:last-child td {border-bottom: none;}
+    .thanks {text-align:center;font-size:1.3rem;font-weight:600;margin:3.2rem 0 1.2rem;}
+    @media (max-width:700px){
+      .container{padding:1.1rem;}
+      .profile-select{gap:0.6em;}
+      .profile-btn{font-size:1em;min-width:90px;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="../index.html" class="nav-logo" style="font-weight:800;font-size:1.5rem;letter-spacing:0.01em;">
+        <span style="color:#e63946;">Swiss</span><span style="color:#111;">Rate</span>
+      </a>
+      <a href="../index.html" class="nav-link">Accueil</a>
+    </div>
+    <div class="navbar-center"></div>
+    <div class="navbar-right">
+      <a href="../templates/about.html" class="nav-link">À propos</a>
+      <a href="../templates/legal.html" class="nav-link">CGU</a>
+      <a href="../templates/add-company.html" class="nav-link">Ajouter une société</a>
+      <a href="../templates/login.html" class="nav-btn">Se connecter</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 style="text-align:center;font-size:2rem;margin-bottom:2rem;">Laisser un avis</h1>
+    <div id="step-profile">
+      <div style="font-size:1.15rem;font-weight:500;text-align:center;margin-bottom:1.6em;">Quel est votre profil ?</div>
+      <div class="profile-select">
+        <button class="profile-btn" onclick="selectProfile('employe')">Employé</button>
+        <button class="profile-btn" onclick="selectProfile('candidat')">Candidat</button>
+        <button class="profile-btn" onclick="selectProfile('client')">Client/Prestataire</button>
+      </div>
+    </div>
+    <form id="feedbackForm" style="display:none;">
+      <div id="questionSection"></div>
+      <div class="question-actions">
+        <button type="button" class="skip" onclick="nextQuestion(true)">Passer</button>
+        <button type="button" id="continueBtn" onclick="nextQuestion()" disabled>Continuer</button>
+      </div>
+    </form>
+    <div id="resumeSection" class="resume-section" style="display:none;">
+      <h2>Résumé de votre retour</h2>
+      <table class="resume-table" id="resumeTable"></table>
+      <div style="text-align:center;margin-top:2.1em;">
+        <button onclick="finishFeedback()" style="background:#e63946;color:#fff;font-weight:700;padding:0.9em 2em;border:none;border-radius:8px;font-size:1.1em;cursor:pointer;">Envoyer mon avis</button>
+      </div>
+    </div>
+    <div id="thanksSection" class="thanks" style="display:none;">Merci pour votre feedback !</div>
+  </div>
+
+<script>
+const questionsData = {
+  employe: [
+    { label: "L’environnement de travail est-il positif ?", sub: [
+      "Vos locaux sont-ils agréables et adaptés à votre travail et vos temps de pause ?",
+      "Les relations avec vos collègues sont-elles saines ?",
+      "Trouvez-vous équitable la gestion du personnel indépendamment de votre sexe, âge, religion… ?",
+      "Subissez-vous une pression de la part de votre hiérarchie ou de vos collègues ?"
+    ]},
+    { label: "Recevez-vous assez de reconnaissance/valorisation ?", sub: [
+      "Touchez-vous votre salaire tous les mois avec les cotisations obligatoires ?",
+      "Votre salaire est-il à la hauteur de votre travail ?",
+      "Touchez-vous des primes lorsque la santé financière de l’entreprise est favorable ?",
+      "Avez-vous des avantages en nature réguliers ou permanents (voiture, repas, réduction…)?"
+    ]},
+    { label: "L’entreprise participe-t-elle à votre développement ?", sub: [
+      "Avez-vous été accompagné et formé à votre arrivée ?",
+      "Avez-vous des entretiens réguliers avec la hiérarchie ?",
+      "L’entreprise vous propose-t-elle des formations ?",
+      "La hiérarchie vous accompagne-t-elle assez sur les risques physiques/psychiques ?"
+    ]},
+    { label: "Mission et communication sont-elles à la hauteur de vos attentes ?", sub: [
+      "Votre charge de travail est-elle adaptée à votre temps de travail ?",
+      "Avez-vous les moyens physiques pour votre mission ?",
+      "La hiérarchie écoute-t-elle vos recommandations pour des solutions ?",
+      "La communication est-elle transparente sur stratégie/finance ?"
+    ]},
+  ],
+  candidat: [
+    { label: "Le système de candidature a-t-il été agréable ?", sub: [
+      "Y a-t-il des postes adaptés à chaque profil (débutant/expérimenté) ?",
+      "Les offres sont-elles non discriminantes ?",
+      "Le système de candidature vous fait-il gagner du temps ?",
+      "Pouvez-vous contacter le recruteur avant de postuler ?"
+    ]},
+    { label: "L’entreprise vous a-t-elle considéré dans votre postulation ?", sub: [
+      "Avez-vous eu un contact humain (appel/entretien) ?",
+      "Avez-vous un retour de réception de candidature ?",
+      "Les délais de réponse sont-ils acceptables ?",
+      "Les salaires proposés sont-ils adaptés à votre formation ?"
+    ]},
+    { label: "Comment avez-vous vécu le retour sur votre candidature ?", sub: [
+      "Avez-vous eu un retour, même automatique ?",
+      "Pouvez-vous contacter le recruteur pour les raisons du refus ?",
+      "Vous êtes-vous senti respecté dans le processus ?",
+      "Le retour était-il justifié ?"
+    ]},
+    { label: "Le processus a-t-il été aligné avec les valeurs de l’entreprise ?", sub: [
+      "L’entreprise met-elle en avant des valeurs humaines ?",
+      "Le recrutement est-il cohérent avec sa communication ?",
+      "Vous êtes-vous senti à l’aise tout du long ?",
+      "Avez-vous gagné en estime pour le recruteur ?"
+    ]},
+  ],
+  client: [
+    { label: "Communication", sub: [
+      "Les échanges sont-ils fluides ?",
+      "Êtes-vous informé de chaque étape ?",
+      "La documentation est-elle claire ?",
+      "Les équipes sont-elles disponibles ?"
+    ]},
+    { label: "Rapidité de paiement", sub: [
+      "Les délais de paiement sont-ils respectés ?",
+      "La facturation est-elle rapide ?",
+      "En cas de souci, le traitement est-il efficace ?",
+      "Recevez-vous vos règlements à temps ?"
+    ]},
+    { label: "Qualité de la relation", sub: [
+      "Le relationnel est-il agréable ?",
+      "Le suivi est-il personnalisé ?",
+      "L’écoute est-elle présente ?",
+      "Recommanderiez-vous cette société ?"
+    ]},
+    { label: "Respect des engagements", sub: [
+      "Les engagements sont-ils tenus ?",
+      "Les devis sont-ils respectés ?",
+      "La parole donnée est-elle fiable ?",
+      "Les imprévus sont-ils bien gérés ?"
+    ]},
+    { label: "Accueil partenaires", sub: [
+      "Vous sentez-vous considéré en tant que partenaire ?",
+      "La collaboration est-elle valorisée ?",
+      "Le réseau est-il ouvert aux partenaires ?",
+      "Êtes-vous mis en avant auprès des clients finaux ?"
+    ]}
+  ]
+};
+let selectedProfile = null;
+let currentQuestion = 0, currentSub = 0;
+let feedbackData = [];
+let askedQuestions = [];
+
+function selectProfile(profile) {
+  selectedProfile = profile;
+  document.querySelectorAll('.profile-btn').forEach(btn => btn.classList.remove('selected'));
+  event.target.classList.add('selected');
+  document.getElementById('step-profile').style.display = "none";
+  document.getElementById('feedbackForm').style.display = "";
+  currentQuestion = 0; currentSub = 0; feedbackData = [];
+  askedQuestions = getQuestionsList(profile);
+  renderQuestion();
+}
+
+function getQuestionsList(profile) {
+  const arr = [];
+  questionsData[profile].forEach((q, qi) => {
+    q.sub.forEach((sub, si) => {
+      arr.push({ label: q.label, sub: sub, qIndex: qi, sIndex: si });
+    });
+  });
+  return arr;
+}
+
+function renderQuestion() {
+  if (currentQuestion >= askedQuestions.length) {
+    showResume();
+    return;
+  }
+  const {label, sub} = askedQuestions[currentQuestion];
+  document.getElementById("questionSection").innerHTML = `
+    <div class="question-label">${label}</div>
+    <div style="margin-bottom:1em;">${sub}</div>
+    <div id="starBar"></div>
+    <textarea class="comment-box" placeholder="Laisser un commentaire (optionnel)" oninput="feedbackData[${currentQuestion}] = { ...feedbackData[${currentQuestion}], comment: this.value }"></textarea>
+  `;
+  renderStars();
+  document.getElementById("continueBtn").disabled = !feedbackData[currentQuestion] || !feedbackData[currentQuestion].note;
+}
+
+function nextQuestion(skip=false) {
+  if (!skip) {
+    // Sauve la note (déjà prise par selectStar)
+  } else {
+    feedbackData[currentQuestion] = {note: null, comment: null};
+  }
+  currentQuestion++;
+  renderQuestion();
+}
+
+function renderStars() {
+  const starBar = document.getElementById("starBar");
+  let selected = feedbackData[currentQuestion]?.note ?? 0;
+  let hover = window._starHover ?? 0;
+  let html = "";
+  for (let i = 1; i <= 5; i++) {
+    let fill = 0;
+    let refVal = hover || selected;
+    if (refVal >= i) fill = 1;
+    else if (refVal >= i - 0.5) fill = 0.5;
+    html += `
+      <svg class="star-svg" viewBox="0 0 40 40"
+        onmousemove="starHover(${i - 0.5}, event)"
+        onmouseleave="starHover(0, event)"
+        onclick="selectStarByEvent(event, ${i})"
+        style="vertical-align:middle;width:32px;height:32px;cursor:pointer;">
+        <defs>
+          <linearGradient id="halfgrad">
+            <stop offset="50%" stop-color="#ffc100"/>
+            <stop offset="50%" stop-color="#eef0f4"/>
+          </linearGradient>
+        </defs>
+        <polygon points="20,3 25.88,14.73 39,16.18 29,25.27 31.76,38.12 20,31.05 8.24,38.12 11,25.27 1,16.18 14.12,14.73"
+          fill="${fill === 1 ? '#ffc100' : fill === 0.5 ? 'url(#halfgrad)' : '#eef0f4'}"
+          stroke="#e2aa00" stroke-width="1.5"/>
+      </svg>
+    `;
+  }
+  starBar.innerHTML = html;
+  document.getElementById("continueBtn").disabled = !feedbackData[currentQuestion] || !feedbackData[currentQuestion].note;
+}
+
+function selectStarByEvent(e, i) {
+  const rect = e.target.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const note = (x < rect.width / 2) ? i - 0.5 : i;
+  selectStar(note);
+}
+
+function selectStar(note) {
+  feedbackData[currentQuestion] = { ...(feedbackData[currentQuestion]||{}), note: note };
+  window._starHover = 0;
+  renderStars();
+}
+
+function starHover(val, e) {
+  window._starHover = val;
+  renderStars();
+}
+
+function showResume() {
+  document.getElementById("feedbackForm").style.display = "none";
+  document.getElementById("resumeSection").style.display = "";
+  let html = "<tr><th>Question</th><th>Note</th><th>Commentaire</th></tr>";
+  askedQuestions.forEach((q, idx) => {
+    let v = feedbackData[idx];
+    html += `<tr>
+      <td>${q.sub}</td>
+      <td>${v && v.note ? v.note + " ★" : "-"}</td>
+      <td>${v && v.comment ? v.comment : ""}</td>
+    </tr>`;
+  });
+  document.getElementById("resumeTable").innerHTML = html;
+}
+
+function finishFeedback() {
+  document.getElementById("resumeSection").style.display = "none";
+  document.getElementById("thanksSection").style.display = "";
+}
+</script>
+</body>
+</html>
