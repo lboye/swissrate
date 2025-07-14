@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>SwissRate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/assets/style.css">
+  <style>
+    .company-logo { height: 34px; max-width: 90%; object-fit: contain; display: block; margin-left: auto; margin-right: auto; }
+    .star { color: #ffb800; font-size: 1.13rem; margin-left: 0.15rem; vertical-align: middle; }
+    .company-rating { font-size: 1.13rem; font-weight: 500; color: #222; display: flex; align-items: center; justify-content: center; gap: 0.15rem; }
+    .company-card { background: #fff; border: 1.5px solid #eee; border-radius: 14px; box-shadow: 0 1px 8px 0 rgba(36,37,38,0.04); padding: 1.35rem 1rem 1rem 1rem; text-align: center; cursor: pointer; transition: box-shadow .18s, border-color .16s;}
+    .company-card:hover { border-color: #e63946; box-shadow: 0 6px 16px 0 rgba(230,57,70,0.08);}
+    .company-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.35rem; margin-top: 2.7rem;}
+    .company-name { font-size: 1.09rem; font-weight: 600; margin-bottom: 0.4rem; color: #191919; letter-spacing: 0.2px;}
+    @media (max-width: 800px) { .company-grid { grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 0.65rem;} .company-card { padding: 0.7rem 0.3rem 0.7rem 0.3rem;} .company-logo { height: 24px; margin-bottom: 0.6rem;} .company-name { font-size: 0.97rem;}}
+  </style>
+</head>
+<body>
+  <nav class="navbar container">
+    <div class="navbar-left">
+      <span class="logo"><span>Swiss</span>Rate</span>
+    </div>
+    <div class="navbar-center">
+      <a href="index.html" class="active">Accueil</a>
+      <a href="about.html">À propos</a>
+      <a href="legal.html">CGU</a>
+      <a href="contact.html">Contact</a>
+      <a href="add-company.html">Ajouter une société</a>
+    </div>
+    <div class="navbar-right">
+      <input class="search-bar" type="search" placeholder="Rechercher…">
+      <a class="login-btn" href="login.html">Login</a>
+    </div>
+  </nav>
+  <div class="container">
+    <h1 style="margin-top:2.5rem;">SwissRate</h1>
+    <p>Explorez et comparez la réputation de toutes les entreprises suisses. Faites défiler pour découvrir plus de sociétés :</p>
+    <div class="company-grid">
+      <a href="templates/company-Lonza.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/Lonza.svg" alt="Lonza logo">
+        <div class="company-name">Lonza</div>
+        <div class="company-rating">3.86 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-Richemont.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/Richemont.svg" alt="Richemont logo">
+        <div class="company-name">Richemont</div>
+        <div class="company-rating">3.88 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-Sika.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/Sika.svg" alt="Sika logo">
+        <div class="company-name">Sika</div>
+        <div class="company-rating">3.89 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-SwissLife.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/SwissLife.svg" alt="Swiss Life logo">
+        <div class="company-name">Swiss Life</div>
+        <div class="company-rating">3.9 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-UBS.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/UBS.svg" alt="Ubs logo">
+        <div class="company-name">Ubs</div>
+        <div class="company-rating">3.92 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-Vifor.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/Vifor.webp" alt="Vifor logo">
+        <div class="company-name">Vifor</div>
+        <div class="company-rating">3.93 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-Zurich.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/Zurich.svg" alt="Zurich logo">
+        <div class="company-name">Zurich</div>
+        <div class="company-rating">3.94 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-abb.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/abb.svg" alt="Abb logo">
+        <div class="company-name">Abb</div>
+        <div class="company-rating">3.95 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-alcon.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/alcon.svg" alt="Alcon logo">
+        <div class="company-name">Alcon</div>
+        <div class="company-rating">3.97 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-credit-suisse.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/credit-suisse.svg" alt="Credit Suisse logo">
+        <div class="company-name">Credit Suisse</div>
+        <div class="company-rating">3.85 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-geberit.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/geberit.svg" alt="Geberit logo">
+        <div class="company-name">Geberit</div>
+        <div class="company-rating">3.86 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-givaudan.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/givaudan.svg" alt="Givaudan logo">
+        <div class="company-name">Givaudan</div>
+        <div class="company-rating">3.88 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-holcim.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/holcim.svg" alt="Holcim logo">
+        <div class="company-name">Holcim</div>
+        <div class="company-rating">3.89 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-lindt.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/lindt.png" alt="Lindt logo">
+        <div class="company-name">Lindt</div>
+        <div class="company-rating">3.9 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-logitech.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/logitech.svg" alt="Logitech logo">
+        <div class="company-name">Logitech</div>
+        <div class="company-rating">3.92 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-lonza_group.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/lonza_group.svg" alt="Lonza logo">
+        <div class="company-name">Lonza</div>
+        <div class="company-rating">3.93 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-nestle.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/nestle.svg" alt="Nestle logo">
+        <div class="company-name">Nestle</div>
+        <div class="company-rating">3.94 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-novartis.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/novartis.svg" alt="Novartis logo">
+        <div class="company-name">Novartis</div>
+        <div class="company-rating">3.95 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-partnersgroup.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/partnersgroup.svg" alt="Partners Group logo">
+        <div class="company-name">Partners Group</div>
+        <div class="company-rating">3.97 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-philipmorris.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/philipmorris.svg" alt="Philip Morris International logo">
+        <div class="company-name">Philip Morris International</div>
+        <div class="company-rating">3.85 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-roche.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/roche.svg" alt="Roche logo">
+        <div class="company-name">Roche</div>
+        <div class="company-rating">3.86 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-sika_ag.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/sika_ag.svg" alt="Sika Ag logo">
+        <div class="company-name">Sika Ag</div>
+        <div class="company-rating">3.88 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-sonova.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/sonova.svg" alt="Sonova logo">
+        <div class="company-name">Sonova</div>
+        <div class="company-rating">3.89 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-swisscom.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/swisscom.svg" alt="Swisscom logo">
+        <div class="company-name">Swisscom</div>
+        <div class="company-rating">3.9 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-swissre.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/swissre.svg" alt="Swiss Re logo">
+        <div class="company-name">Swiss Re</div>
+        <div class="company-rating">3.92 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-syngenta.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/syngenta.svg" alt="Syngenta logo">
+        <div class="company-name">Syngenta</div>
+        <div class="company-rating">3.93 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-temenos.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/temenos.svg" alt="Temenos logo">
+        <div class="company-name">Temenos</div>
+        <div class="company-rating">3.94 <span class="star">⭐️</span></div>
+      </a>
+      <a href="templates/company-ubs.html" class="company-card">
+        <img class="company-logo" src="static/assets/logos/ubs.png" alt="Ubs logo">
+        <div class="company-name">Ubs</div>
+        <div class="company-rating">3.95 <span class="star">⭐️</span></div>
+      </a>
+
+    </div>
+  </div>
+  <div class="footer">
+    &copy; 2025 SwissRate | <a href="legal.html">CGU</a> | <a href="about.html">À propos</a> | <a href="contact.html">Contact</a>
+  </div>
+</body>
+</html>
